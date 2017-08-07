@@ -4,11 +4,10 @@
 
 To get started with FramgiaAuth, use Composer to add the package to your project's dependencies:
 
-`composer require framgia-education/laravel-omniauth-hrsystem`
+`composer require framgia/fauth-php`
 
 Run the following command:
-`composer install`
-or
+
 `composer update`
 
 ### Configuration
