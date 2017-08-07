@@ -3,6 +3,7 @@
 namespace Framgia\Fauth\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Framgia\Fauth\Contracts\Factory;
 
 /**
  * @see \Framgia\Fauth\FAuthManager
@@ -16,6 +17,6 @@ class Fauth extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'Framgia\Fauth\Contracts\Factory';
+        return Factory::class;
     }
 }

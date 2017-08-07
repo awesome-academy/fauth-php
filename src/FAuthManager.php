@@ -29,7 +29,7 @@ class FAuthManager extends Manager implements Contracts\Factory
         $config = $this->app['config']['services.framgia'];
 
         return $this->buildProvider(
-            'Framgia\Fauth\Provider\FramgiaProvider', $config
+            FramgiaProvider::class, $config
         );
     }
 

@@ -168,7 +168,7 @@ abstract class AbstractProvider implements Provider
      */
     protected function buildAuthUrlFromBase($url, $state)
     {
-        return $url.'?'.http_build_query($this->getCodeFields($state), '', '&', $this->encodingType);
+        return $url . '?' . http_build_query($this->getCodeFields($state), '', '&', $this->encodingType);
     }
 
     /**
@@ -217,8 +217,8 @@ abstract class AbstractProvider implements Provider
 
         if ($user) {
             return $user->setToken($token)
-                    ->setRefreshToken(Arr::get($response, 'refresh_token'))
-                    ->setExpiresIn(Arr::get($response, 'expires_in'));
+                ->setRefreshToken(Arr::get($response, 'refresh_token'))
+                ->setExpiresIn(Arr::get($response, 'expires_in'));
         }
     }
 
