@@ -3,6 +3,7 @@
 namespace Framgia\Fauth;
 
 use Illuminate\Support\ServiceProvider;
+use Framgia\Fauth\Contracts\Factory;
 
 class FAuthServiceProvider extends ServiceProvider
 {
@@ -35,6 +36,6 @@ class FAuthServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['Framgia\Fauth\Contracts\Factory'];
+        return [Factory::class];
     }
 }

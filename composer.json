@@ -1,5 +1,5 @@
 {
-    "name": "framgia/fauth",
+    "name": "framgia/fauth-php",
     "keywords": ["laravel", "oauth", "authentication"],
     "description": "Authentication User Framgia",
     "type": "library",
