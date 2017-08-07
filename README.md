@@ -2,21 +2,12 @@
 
 ### Installation
 
-Add the following to your composer.json
-```
-"repositories": [
-    {
-        "url": "https://github.com/framgia/fauth-php",
-        "type": "git"
-    }
-],
+To get started with FramgiaAuth, use Composer to add the package to your project's dependencies:
 
-"require": {
-    "framgia/fauth-php" : "dev-master"
-}
-```
+`composer require framgia/fauth-php`
 
 Run the following command:
+
 `composer update`
 
 ### Configuration
