@@ -22,6 +22,7 @@ class FramgiaProvider extends AbstractProvider implements ProviderInterface
      * @var string
      */
     protected $baseUrl = '';
+    protected $authorizeUrl = '';
 
     /**
      * Construction
@@ -29,6 +30,7 @@ class FramgiaProvider extends AbstractProvider implements ProviderInterface
     public function __construct()
     {
         $this->baseUrl = env('FRAMGIA_CLIENT_BASE_URL');
+        $this->authorizeUrl = env('FRAMGIA_CLIENT_AUTHORIZE_URL');
     }
 
     /**
@@ -39,7 +41,7 @@ class FramgiaProvider extends AbstractProvider implements ProviderInterface
      */
     public function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase($this->baseUrl . '/auth/hr_system/authorize', $state);
+        return $this->buildAuthUrlFromBase($this->authorizeUrl . '/authorize', $state);
     }
 
     /**
@@ -49,7 +51,7 @@ class FramgiaProvider extends AbstractProvider implements ProviderInterface
      */
     public function getTokenUrl()
     {
-        return $this->baseUrl . '/auth/hr_system/access_token/';
+        return $this->baseUrl . '/auth/access_token';
     }
 
     public function request(callable $request)
@@ -65,7 +67,7 @@ class FramgiaProvider extends AbstractProvider implements ProviderInterface
                 return json_decode($response->getBody());
             }
 
-            throw new Exception("RequestException");
+            throw new Exception('RequestException');
         }
     }
 
@@ -132,7 +134,7 @@ class FramgiaProvider extends AbstractProvider implements ProviderInterface
         } catch (Exception $e) {
             return;
         }
-        
+
         $user = json_decode($response->getBody(), true);
 
         return $user;
@@ -155,7 +157,7 @@ class FramgiaProvider extends AbstractProvider implements ProviderInterface
         } catch (Exception $e) {
             return;
         }
-        
+
         $user = json_decode($response->getBody(), true);
 
         if ($user && isset($user['email'])) {
@@ -175,26 +177,27 @@ class FramgiaProvider extends AbstractProvider implements ProviderInterface
     {
         if ($user) {
             return (new User)->setRaw($user)->map([
-                "email" => isset($user['email']) ? $user['email'] : null,
-                "avatar" => isset($user['avatar']) ? $user['avatar'] : null,
-                "name" => isset($user['name']) ? $user['name'] : null,
-                "authentication_token" => isset($user['authentication_token']) ? $user['authentication_token'] : null,
-                "gender" => isset($user['gender']) ? $user['gender'] : null,
-                "role" => isset($user['role']) ? $user['role'] : null,
-                "birthday" => isset($user['birthday']) ? $user['birthday'] : null,
-                "employee_code" => isset($user['employee_code']) ? $user['employee_code'] : null,
-                "position" => isset($user['position']) ? $user['position'] : null,
-                "contract_date" => isset($user['contract_date']) ? $user['contract_date'] : null,
-                "status" => isset($user['status']) ? $user['status'] : null,
-                "phone_number" => isset($user['phone_number']) ? $user['phone_number'] : null,
-                "contract_type" => isset($user['contract_type']) ? $user['contract_type'] : null,
-                "university" => isset($user['university']) ? $user['university'] : null,
-                "join_date" => isset($user['join_date']) ? $user['join_date'] : null,
-                "resigned_date" => isset($user['resigned_date']) ? $user['resigned_date'] : null,
+                'email' => isset($user['email']) ? $user['email'] : null,
+                'avatar' => isset($user['avatar']) ? $user['avatar'] : null,
+                'name' => isset($user['name']) ? $user['name'] : null,
+                'authentication_token' => isset($user['oauth_token']) ? $user['oauth_token'] : null,
+                'gender' => isset($user['gender']) ? $user['gender'] : null,
+                'role' => isset($user['role']) ? $user['role'] : null,
+                'birthday' => isset($user['birthday']) ? $user['birthday'] : null,
+                'employee_code' => isset($user['employee_code']) ? $user['employee_code'] : null,
+                'position' => isset($user['position']['name']) ? $user['position']['name'] : null,
+                'contract_date' => isset($user['contract_date']) ? $user['contract_date'] : null,
+                'status' => isset($user['status']) ? $user['status'] : null,
+                'phone_number' => isset($user['phone_number']) ? $user['phone_number'] : null,
+                'contract_type' => isset($user['contract_type']) ? $user['contract_type'] : null,
+                'university' => isset($user['university']) ? $user['university'] : null,
+                'join_date' => isset($user['join_date']) ? $user['join_date'] : null,
+                'resigned_date' => isset($user['resigned_date']) ? $user['resigned_date'] : null,
+                'workspaces' => isset($user['workspaces']['name']) ? $user['workspaces']['name'] : null,
             ]);
         }
     }
-  
+
 
     /**
      * Get the default options for an HTTP request.
