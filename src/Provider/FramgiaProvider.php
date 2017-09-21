@@ -125,12 +125,15 @@ class FramgiaProvider extends AbstractProvider implements ProviderInterface
      */
     public function getUserByToken($token)
     {
-        $userUrl = $this->baseUrl . '/me?access_token=' . $token;
+        $userUrl = $this->baseUrl . '/me';
 
         try {
-            $response = $this->getHttpClient()->get(
-                $userUrl, $this->getRequestOptions()
-            );
+            $response = $this->getHttpClient()->post($userUrl, [
+                'form_params' => [
+                    'access_token' => $token,
+                ],
+                $this->getRequestOptions(),
+            ]);
         } catch (Exception $e) {
             return;
         }
@@ -193,7 +196,7 @@ class FramgiaProvider extends AbstractProvider implements ProviderInterface
                 'university' => isset($user['university']) ? $user['university'] : null,
                 'join_date' => isset($user['join_date']) ? $user['join_date'] : null,
                 'resigned_date' => isset($user['resigned_date']) ? $user['resigned_date'] : null,
-                'workspaces' => isset($user['workspaces']['name']) ? $user['workspaces']['name'] : null,
+                'workspaces' => isset($user['workspaces'][0]['name']) ? $user['workspaces'][0]['name'] : null,
             ]);
         }
     }
