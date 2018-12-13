@@ -6,6 +6,7 @@ use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Support\Arr;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Request;
 
 class FramgiaProvider extends AbstractProvider implements ProviderInterface
 {
@@ -27,8 +28,9 @@ class FramgiaProvider extends AbstractProvider implements ProviderInterface
     /**
      * Construction
      */
-    public function __construct()
+    public function __construct(Request $request, $clientId, $clientSecret, $redirectUrl)
     {
+        parent::__construct($request, $clientId, $clientSecret, $redirectUrl);
         $this->baseUrl = env('FRAMGIA_CLIENT_BASE_URL');
         $this->authorizeUrl = env('FRAMGIA_CLIENT_AUTHORIZE_URL');
     }
@@ -155,12 +157,12 @@ class FramgiaProvider extends AbstractProvider implements ProviderInterface
 
         try {
             $response = $this->getHttpClient()->get(
-                $userUrl, $this->getRequestOptions()
+                $userUrl,
+                $this->getRequestOptions()
             );
         } catch (Exception $e) {
             return;
         }
-
         $user = json_decode($response->getBody(), true);
 
         if ($user && isset($user['email'])) {
